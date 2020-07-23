@@ -425,14 +425,14 @@ def _canonical_assembly_id(identifier):
 
     res = db.session.query(Genome.assembly_id).filter(Genome.assembly_id.ilike("{}%".format(safe_id))).first()
     if res:
-        return res.assembly_id.split('.')[0], False
+        return res.assembly_id, False
 
     res = db.session.query(Genome.assembly_id) \
                     .join(DnaSequence) \
                     .filter(DnaSequence.acc.ilike("{}%".format(safe_id))) \
                     .first()
     if res:
-        return res.assembly_id.split('.')[0], False
+        return res.assembly_id, False
 
     abort(404)
 
